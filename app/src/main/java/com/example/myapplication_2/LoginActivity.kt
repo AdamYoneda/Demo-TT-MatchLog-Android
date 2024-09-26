@@ -55,6 +55,12 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
         }
+
+        // 登録画面へ遷移
+        binding.move.setOnClickListener {
+            val intent = Intent(this, SignupActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     public override fun onStart() {
