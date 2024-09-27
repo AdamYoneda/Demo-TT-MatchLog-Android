@@ -55,14 +55,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    public override fun onStart() {
-        super.onStart()
-        // ユーザーがすでにログインしている場合、MainActivity に移動
-        if (loginViewModel.isUserLoggedIn()) {
-            moveToMainActivity()
-        }
-    }
-
     private fun moveToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
