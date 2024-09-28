@@ -46,6 +46,9 @@ dependencies {
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-auth")
+    // Declare the dependency for the Cloud Firestore library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-firestore")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -62,4 +65,5 @@ dependencies {
 
     // Optional: ライフサイクル関連の拡張機能を追加する場合
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation(kotlin("script-runtime"))
 }
