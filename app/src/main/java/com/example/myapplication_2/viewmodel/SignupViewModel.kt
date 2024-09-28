@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.channels.BroadcastChannel
 
 class SignupViewModel : ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
@@ -17,42 +18,60 @@ class SignupViewModel : ViewModel() {
     private val _signupResult = MutableLiveData<Boolean>()
     val signupResult: LiveData<Boolean> = _signupResult
 
-    // 新規ユーザー登録
+
+    // 現在のユーザーのチェック
+    fun isUserLoggedIn(): Boolean {
+        return auth.currentUser != null
+    }
+
+    // A. 新規ユーザー登録
     fun signup(userName: String, email: String, password: String) {
+        // A-1 Authを使った新規登録
+        registerUser(email, password) { userId ->
+            if (userId != null) {
+                // A-2 新規登録が成功したユーザーをFirestoreへ登録
+                saveUserToFirestore(userId, userName, email) { isSaved ->
+                    _signupResult.value = isSaved // Firestore保存結果を反映
+                }
+            } else {
+                _signupResult.value = false // ユーザー登録失敗
+            }
+        }
+    }
+
+    // 1.Authを使った新規登録
+    private fun registerUser(email: String, password: String, onResult: (String?) -> Unit) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val userId = auth.currentUser?.uid
-                    userId?.let {
-                        val user = hashMapOf(
-                            "user_id" to it,
-                            "user_name" to userName,
-                            "email" to email,
-                            "joined_date" to Timestamp.now()
-                        )
-                        // Firestoreのusersコレクションにユーザーデータを保存
-                        db.collection("users").document(it).set(user)
-                            .addOnSuccessListener {
-                                // Firestoreへの保存成功
-                                _signupResult.value = true
-                            }
-                            .addOnFailureListener {
-                                // Firestoreへの保存失敗
-                                _signupResult.value = false
-                            }
-                    } ?: run {
-                        // Firestoreへの保存失敗
-                        _signupResult.value = false
-                    }
+                    onResult(userId)
                 } else {
-                    // Authでのユーザー登録の失敗
-                    _signupResult.value = false
+                    onResult(null)
                 }
             }
     }
 
-    // 現在のユーザーのチェック
-    fun isUserLoggedIn(): Boolean {
-        return  auth.currentUser != null
+    // 2.新規登録が成功したユーザーをFirestoreへ登録
+    private fun saveUserToFirestore(
+        userId: String,
+        userName: String,
+        email: String,
+        onResult: (Boolean) -> Unit
+    ) {
+        val user = hashMapOf(
+            "user_id" to userId,
+            "user_name" to userName,
+            "email" to email,
+            "joined_date" to Timestamp.now()
+        )
+        // Firestoreのusersコレクションにユーザーデータを保存
+        db.collection("users").document(userId).set(user)
+            .addOnSuccessListener {
+                onResult(true)
+            }
+            .addOnFailureListener {
+                onResult(false)
+            }
     }
 }
