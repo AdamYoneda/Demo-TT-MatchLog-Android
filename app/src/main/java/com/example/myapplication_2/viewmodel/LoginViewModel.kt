@@ -1,14 +1,17 @@
 package com.example.myapplication_2.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class LoginViewModel: ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
+    private val db = Firebase.firestore
 
     // ログイン結果を管理する LiveData
     private val _loginResult = MutableLiveData<Boolean>()
@@ -16,9 +19,60 @@ class LoginViewModel: ViewModel() {
 
     // ログイン処理
     fun login(email: String, password: String) {
+        // 1. Authでの既存のユーザーのログイン
+        authLogin(email,password) { userId ->
+            if (userId != null) {
+                // 2. ユーザー情報取得
+                fetchUserInfo(userId) { fetchResult ->
+                    _loginResult.value = fetchResult
+                }
+            } else {
+                _loginResult.value = false // Auth失敗
+            }
+        }
+    }
+
+    private fun authLogin(email: String, password: String, onResult: (String?) -> Unit) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
-                _loginResult.value = task.isSuccessful
+                if (task.isSuccessful) {
+                    val userId = auth.currentUser?.uid
+                    onResult(userId)
+                } else {
+                    onResult(null)
+                }
+            }
+    }
+
+    private fun fetchUserInfo(userId: String, onResult: (Boolean) -> Unit) {
+        db.collection("users").document(userId).get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    // Firestoreから取得したデータをログに表示
+                    val userData = document.data
+                    Log.d("FirestoreData", "User data: $userData")
+
+                    // 個々のフィールドを取得
+                    val userName = document.getString("user_name")
+                    val email = document.getString("email")
+                    val joinedDate = document.getTimestamp("joined_date")
+
+                    // データを確認
+                    Log.d(
+                        "FirestoreData",
+                        "UserName: $userName, Email: $email, Joined Date: $joinedDate"
+                    )
+
+                    // 成功としてコールバック
+                    onResult(true)
+                } else {
+                    // ドキュメントが存在しない場合
+                    Log.d("FirestoreData", "No such document")
+                    onResult(false)
+                }
+            }
+            .addOnFailureListener {
+                onResult(false)
             }
     }
 
