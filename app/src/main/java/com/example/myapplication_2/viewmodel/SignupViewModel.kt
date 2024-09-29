@@ -4,13 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.myapplication_2.model.User
+import com.example.myapplication_2.utils.UserManager
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.channels.BroadcastChannel
 
 class SignupViewModel : ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
@@ -90,7 +89,7 @@ class SignupViewModel : ViewModel() {
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
                     // Firestoreから取得したデータをUserモデルに変換
-                    val user = User(
+                    UserManager.setUser(
                         userId = document.getString("user_id") ?: "",
                         userName = document.getString("user_name") ?: "",
                         email = document.getString("email") ?: "",

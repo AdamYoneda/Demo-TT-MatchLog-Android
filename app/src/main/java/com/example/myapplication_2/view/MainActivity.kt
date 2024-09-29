@@ -2,12 +2,9 @@ package com.example.myapplication_2.view
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.myapplication_2.R
 import com.example.myapplication_2.databinding.ActivityMainBinding
+import com.example.myapplication_2.utils.UserManager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -20,10 +17,29 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Fetch user information from UserManager and display it
+        displayUserInfo()
+
         binding.logoutBtn.setOnClickListener {
             Firebase.auth.signOut()
+            UserManager.clearUser()
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    // Method to display user info
+    private fun displayUserInfo() {
+        val user = UserManager.getUser()
+
+        if (user != null) {
+            binding.userNameText.text = "User Name: ${user.userName}"
+            binding.emailText.text = "Email: ${user.email}"
+            binding.joinedDateText.text = "Joined Date: ${user.joinedDate?.toDate()?.toString() ?: "N/A"}"
+        } else {
+            binding.userNameText.text = "User not found"
+            binding.emailText.text = ""
+            binding.joinedDateText.text = ""
         }
     }
 }
