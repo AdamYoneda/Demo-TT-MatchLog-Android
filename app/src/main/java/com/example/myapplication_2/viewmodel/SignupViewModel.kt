@@ -85,7 +85,7 @@ class SignupViewModel : ViewModel() {
             }
     }
 
-    private fun fetchUserInfo(userId: String, onResult: (User) -> Unit) {
+    private fun fetchUserInfo(userId: String, onResult: (Boolean) -> Unit) {
         db.collection("users").document(userId).get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
@@ -96,7 +96,7 @@ class SignupViewModel : ViewModel() {
                         email = document.getString("email") ?: "",
                         joinedDate = document.getTimestamp("joined_date")
                     )
-                    onResult(User)
+                    onResult(true)
                 } else {
                     // 取得に失敗した場合
                     Log.d("Firestore", "Failed to fetch user data")
