@@ -1,8 +1,10 @@
 package com.example.myapplication_2.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.myapplication_2.model.User
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -31,7 +33,15 @@ class SignupViewModel : ViewModel() {
             if (userId != null) {
                 // A-2 新規登録が成功したユーザーをFirestoreへ登録
                 saveUserToFirestore(userId, userName, email) { isSaved ->
-                    _signupResult.value = isSaved // Firestore保存結果を反映
+                    if (isSaved) {
+                        // A-3 Firestoreからユーザー情報を取得
+                        fetchUserInfo(userId) { user ->
+                            // TODO: something
+                            _signupResult.value = true
+                        }
+                    } else {
+                        _signupResult.value = false // Firestoreへの保存失敗
+                    }
                 }
             } else {
                 _signupResult.value = false // ユーザー登録失敗
@@ -72,6 +82,28 @@ class SignupViewModel : ViewModel() {
             }
             .addOnFailureListener {
                 onResult(false)
+            }
+    }
+
+    private fun fetchUserInfo(userId: String, onResult: (User) -> Unit) {
+        db.collection("users").document(userId).get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    // Firestoreから取得したデータをUserモデルに変換
+                    val user = User(
+                        userId = document.getString("user_id") ?: "",
+                        userName = document.getString("user_name") ?: "",
+                        email = document.getString("email") ?: "",
+                        joinedDate = document.getTimestamp("joined_date")
+                    )
+                    onResult(User)
+                } else {
+                    // 取得に失敗した場合
+                    Log.d("Firestore", "Failed to fetch user data")
+                }
+            }
+            .addOnFailureListener {
+                Log.d("Firestore", "Failed to fetch user data")
             }
     }
 }
