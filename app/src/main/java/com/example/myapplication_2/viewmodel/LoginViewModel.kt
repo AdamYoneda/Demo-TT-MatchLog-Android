@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.myapplication_2.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -48,26 +49,19 @@ class LoginViewModel: ViewModel() {
         db.collection("users").document(userId).get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
-                    // Firestoreから取得したデータをログに表示
-                    val userData = document.data
-                    Log.d("FirestoreData", "User data: $userData")
-
-                    // 個々のフィールドを取得
-                    val userName = document.getString("user_name")
-                    val email = document.getString("email")
-                    val joinedDate = document.getTimestamp("joined_date")
-
-                    // データを確認
-                    Log.d(
-                        "FirestoreData",
-                        "UserName: $userName, Email: $email, Joined Date: $joinedDate"
+                    // Firestoreから取得したデータをUserモデルに変換
+                    val user = User(
+                        userId = document.getString("user_id") ?: "",
+                        userName = document.getString("user_name") ?: "",
+                        email = document.getString("email") ?: "",
+                        joinedDate = document.getTimestamp("joined_date")
                     )
 
                     // 成功としてコールバック
                     onResult(true)
                 } else {
-                    // ドキュメントが存在しない場合
-                    Log.d("FirestoreData", "No such document")
+                    // 取得に失敗した場合
+                    Log.d("Firestore", "Failed to fetch user data")
                     onResult(false)
                 }
             }
