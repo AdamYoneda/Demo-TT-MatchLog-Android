@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Observer
 import com.example.myapplication_2.databinding.ActivityLoginBinding
 import com.example.myapplication_2.viewmodel.LoginViewModel
@@ -17,6 +18,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
+
+        // setContentViewの前に呼び出す
+        setSplashScreen()
 
         setContentView(binding.root)
 
@@ -53,5 +57,10 @@ class LoginActivity : AppCompatActivity() {
     private fun moveToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun setSplashScreen() {
+        Thread.sleep(3000) // 3秒間
+        installSplashScreen()
     }
 }
