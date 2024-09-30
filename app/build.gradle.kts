@@ -66,4 +66,6 @@ dependencies {
     // Optional: ライフサイクル関連の拡張機能を追加する場合
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation(kotlin("script-runtime"))
+    // SplashScreen REF : https://developer.android.com/develop/ui/views/launch/splash-screen?hl=ja#getting-started
+    implementation("androidx.core:core-splashscreen:1.0.0")
 }
