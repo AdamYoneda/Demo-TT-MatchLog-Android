@@ -19,9 +19,6 @@ class LoginActivity : AppCompatActivity() {
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
 
-        // setContentViewの前に呼び出す
-        setSplashScreen()
-
         setContentView(binding.root)
 
         // ユーザーがすでにログインしている場合、MainActivity に移動
@@ -57,10 +54,5 @@ class LoginActivity : AppCompatActivity() {
     private fun moveToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-    }
-
-    private fun setSplashScreen() {
-        Thread.sleep(3000) // 3秒間
-        installSplashScreen()
     }
 }

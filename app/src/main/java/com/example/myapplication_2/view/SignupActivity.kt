@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Observer
+import com.example.myapplication_2.R
 import com.example.myapplication_2.databinding.ActivitySignupBinding
 import com.example.myapplication_2.viewmodel.SignupViewModel
 
@@ -14,6 +16,10 @@ class SignupActivity : AppCompatActivity() {
     private val signupViewModel: SignupViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        installSplashScreen()
+        setTheme(R.style.Theme_MyApplication_2)
+
         super.onCreate(savedInstanceState)
 
         binding = ActivitySignupBinding.inflate(layoutInflater)
