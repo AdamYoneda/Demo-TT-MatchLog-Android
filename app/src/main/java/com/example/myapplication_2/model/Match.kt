@@ -4,5 +4,6 @@ package com.example.myapplication_2.model
 data class Match(
     val score: String,
     val opponentName: String?,
-    val opponentTeam: String?
+    val opponentTeam: String?,
+    val memo: String?
 )
