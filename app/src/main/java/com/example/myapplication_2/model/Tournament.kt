@@ -7,8 +7,3 @@ data class Tournament(
     val matchType: MatchType,             // 試合形式（シングルス、ダブルス、団体戦）
     val matches: List<Match>              // 試合リスト
 )
-
-// 試合形式の列挙型
-enum class MatchType {
-    SINGLES, DOUBLES, TEAM
-}
