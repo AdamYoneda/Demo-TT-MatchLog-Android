@@ -2,6 +2,7 @@ package com.example.myapplication_2.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication_2.R
 
@@ -11,7 +12,11 @@ class MatchRecordActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_match_record)
+
+        // recyclerViewを表示させる
+        recyclerView = findViewById(R.id.recyclerView) // idの取得
+        recyclerView.adapter = RecyclerAdapter() // アダプターをセット
+        recyclerView.layoutManager = LinearLayoutManager(this) // 各アイテムを縦に並べるように指示
     }
 }
