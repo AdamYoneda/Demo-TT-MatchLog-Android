@@ -31,6 +31,6 @@ class RecyclerAdapter : RecyclerView.Adapter<MatchViewHolderItem>() {
 
     // C. データが何件あるかをカウントする
     override fun getItemCount(): Int {
-
+        return animalList.size
     }
 }
