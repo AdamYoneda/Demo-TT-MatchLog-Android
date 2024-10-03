@@ -26,7 +26,7 @@ class RecyclerAdapter : RecyclerView.Adapter<MatchViewHolderItem>() {
 
     // B. position番号のデータをレイアウト(xml)に表示するようセット
     override fun onBindViewHolder(holder: MatchViewHolderItem, position: Int) {
-
+        holder.itemName.text = animalList[position]
     }
 
     // C. データが何件あるかをカウントする
