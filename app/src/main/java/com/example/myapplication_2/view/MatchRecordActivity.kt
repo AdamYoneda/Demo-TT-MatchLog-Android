@@ -14,9 +14,12 @@ class MatchRecordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_match_record)
 
+        // List
+        val tournaments = listOf()
+
         // recyclerViewを表示させる
         recyclerView = findViewById(R.id.recyclerView) // idの取得
-        recyclerView.adapter = RecyclerAdapter() // アダプターをセット
+        recyclerView.adapter = MatchRecordAdapter(tournaments) // アダプターをセット
         recyclerView.layoutManager = LinearLayoutManager(this) // 各アイテムを縦に並べるように指示
     }
 }
