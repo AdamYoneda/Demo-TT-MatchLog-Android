@@ -9,7 +9,7 @@ import com.example.myapplication_2.model.Tournament
 class TournamentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(tournament: Tournament) {
         // 各大会のデータをバインド
-        itemView.findViewById<TextView>(R.id.tournament_name).text = tournament.tournamentName
+        itemView.findViewById<TextView>(R.id.tournament_name).text = "${tournament.tournamentName} (${tournament.matchType.getValue()})"
         itemView.findViewById<TextView>(R.id.tournament_date).text = tournament.date
     }
 }
