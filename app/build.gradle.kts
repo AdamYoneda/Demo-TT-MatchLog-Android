@@ -68,4 +68,8 @@ dependencies {
     implementation(kotlin("script-runtime"))
     // SplashScreen REF : https://developer.android.com/develop/ui/views/launch/splash-screen?hl=ja#getting-started
     implementation("androidx.core:core-splashscreen:1.0.0")
+
+    // 丸くトリミング
+    // https://github.com/hdodenhof/CircleImageView
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 }
