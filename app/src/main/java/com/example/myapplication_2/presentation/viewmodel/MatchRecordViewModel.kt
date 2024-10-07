@@ -15,7 +15,7 @@ class MatchRecordViewModel(private val repository: TournamentRepository) : ViewM
 
     // データの取得とソートを行う
     fun loadTournaments() {
-        val tournamentsList = repository.getTournaments()
+        val tournamentsList = repository.fetchTournaments()
         val matchTypeComparator = compareBy<Tournament> { tournament ->
             when (tournament.matchType) {
                 MatchType.SINGLES -> 1
