@@ -19,10 +19,16 @@ class SignupViewModel : ViewModel() {
     private val _signupResult = MutableLiveData<Boolean>()
     val signupResult: LiveData<Boolean> = _signupResult
 
-
     // 現在のユーザーのチェック
-    fun isUserLoggedIn(): Boolean {
-        return auth.currentUser != null
+    fun checkUserLoggedIn() {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            fetchUserInfo(currentUser.uid) { fetchResult ->
+                _signupResult.value = fetchResult
+            }
+        } else {
+            _signupResult.value = false
+        }
     }
 
     // A. 新規ユーザー登録

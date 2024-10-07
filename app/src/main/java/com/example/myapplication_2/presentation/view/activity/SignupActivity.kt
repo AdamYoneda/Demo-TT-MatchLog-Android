@@ -26,9 +26,12 @@ class SignupActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // ユーザーがすでにログインしている場合、MainActivity に移動
-        if (signupViewModel.isUserLoggedIn()) {
-            moveToMainActivity()
-        }
+        signupViewModel.checkUserLoggedIn()
+        signupViewModel.signupResult.observe(this, Observer { isLoggedIn ->
+            if (isLoggedIn) {
+                moveToMainActivity()
+            }
+        })
 
         // 登録ボタンのクリックイベント
         binding.continueBtn.setOnClickListener {

@@ -21,9 +21,12 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // ユーザーがすでにログインしている場合、MainActivity に移動
-        if (loginViewModel.isUserLoggedIn()) {
-            moveToMainActivity()
-        }
+        loginViewModel.checkUserLoggedIn()
+        loginViewModel.loginResult.observe(this, Observer { isLoggedIn ->
+            if (isLoggedIn) {
+                moveToMainActivity()
+            }
+        })
 
         // ログインボタンのクリックイベント
         binding.continueBtn.setOnClickListener {

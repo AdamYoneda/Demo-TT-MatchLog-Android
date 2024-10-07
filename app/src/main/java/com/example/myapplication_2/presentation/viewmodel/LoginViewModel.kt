@@ -18,6 +18,18 @@ class LoginViewModel: ViewModel() {
     private val _loginResult = MutableLiveData<Boolean>()
     val loginResult: LiveData<Boolean> = _loginResult
 
+    // 現在のユーザーのチェック
+    fun checkUserLoggedIn() {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            fetchUserInfo(currentUser.uid) { fetchResult ->
+                _loginResult.value = fetchResult
+            }
+        } else {
+            _loginResult.value = false
+        }
+    }
+
     // ログイン処理
     fun login(email: String, password: String) {
         // 1. Authでの既存のユーザーのログイン
@@ -68,10 +80,5 @@ class LoginViewModel: ViewModel() {
             .addOnFailureListener {
                 onResult(false)
             }
-    }
-
-    // 現在のユーザーのチェック
-    fun isUserLoggedIn(): Boolean {
-        return auth.currentUser != null
     }
 }
