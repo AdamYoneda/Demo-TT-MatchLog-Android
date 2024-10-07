@@ -56,18 +56,17 @@ class MatchRecordActivity : AppCompatActivity() {
             this, drawerLayout, toolbar,
             R.string.open, R.string.close
         )
-
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         val navView: NavigationView = findViewById(R.id.nav_view)
-
-        // ヘッダービューを取得
+        // ヘッダービューを取得し、ユーザー名を動的に代入
         val headerView = navView.getHeaderView(0) // ヘッダーレイアウトの最初のビューを取得
         val profileUserName: TextView = headerView.findViewById(R.id.profile_user_name)
         val userName = UserManager.getUser()?.userName
         profileUserName.text = userName
 
+        // 各menuを押した場合の処理
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_edit_profile -> {
