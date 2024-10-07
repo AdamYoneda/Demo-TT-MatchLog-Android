@@ -72,4 +72,7 @@ dependencies {
     // 丸くトリミング
     // https://github.com/hdodenhof/CircleImageView
     implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    implementation ("com.google.android.material:material:<latest_version>")
+
 }

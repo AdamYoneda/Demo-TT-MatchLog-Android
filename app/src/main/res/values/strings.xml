@@ -2,4 +2,5 @@
     <string name="app_name">My Application_2</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="fab_description">Add New Match Record</string>
 </resources>

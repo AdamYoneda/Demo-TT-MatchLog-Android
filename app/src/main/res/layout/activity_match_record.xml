@@ -36,6 +36,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             />
 
+        <!-- FloatingActionButton -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:contentDescription="@string/fab_description"
+            app:backgroundTint="#00BCD4"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/baseline_add_white_24"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- ナビゲーションメニュー -->
