@@ -1,8 +1,11 @@
 package com.example.myapplication_2.view
 
-import android.app.LauncherActivity
 import android.os.Bundle
+import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar // 修正
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication_2.R
@@ -10,10 +13,14 @@ import com.example.myapplication_2.model.GameScores
 import com.example.myapplication_2.model.Match
 import com.example.myapplication_2.model.MatchType
 import com.example.myapplication_2.model.Tournament
+import com.google.android.material.navigation.NavigationView
 
 class MatchRecordActivity : AppCompatActivity() {
     // recyclerViewの変数を用意
     private lateinit var recyclerView: RecyclerView
+    // ハンバーガーメニュー用
+    private lateinit var drawerLayout: DrawerLayout
+    lateinit var toggle: ActionBarDrawerToggle
 
     // List
     val tournaments = listOf(
@@ -535,5 +542,46 @@ class MatchRecordActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView) // idの取得
         recyclerView.adapter = MatchRecordAdapter(sortedTournaments) // アダプターをセット
         recyclerView.layoutManager = LinearLayoutManager(this) // 各アイテムを縦に並べるように指示
+
+        // Toolbarの設定
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        // DrawerLayoutとハンバーガーメニューの連携
+        drawerLayout = findViewById(R.id.drawerLayout)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        toggle = ActionBarDrawerToggle(
+            this, drawerLayout, toolbar,
+            R.string.open, R.string.close
+        )
+
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        // NavigationViewのアイテムクリックリスナーの設定
+        navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_edit_profile -> {
+                    // プロフィール編集画面へ移動する処理
+                }
+                R.id.nav_forms -> {
+                    // お問い合わせ画面へ移動する処理
+                }
+                R.id.nav_logout -> {
+                    // ログアウト処理
+                }
+                R.id.nav_delete_account -> {
+                    // アカウント削除処理
+                }
+            }
+            drawerLayout.closeDrawers() // メニューを閉じる
+            true
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
