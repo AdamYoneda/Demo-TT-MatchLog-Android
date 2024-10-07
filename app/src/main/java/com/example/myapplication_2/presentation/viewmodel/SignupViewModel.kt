@@ -41,7 +41,6 @@ class SignupViewModel : ViewModel() {
                     if (isSaved) {
                         // A-3 Firestoreからユーザー情報を取得
                         fetchUserInfo(userId) { user ->
-                            // TODO: something
                             _signupResult.value = true
                         }
                     } else {
