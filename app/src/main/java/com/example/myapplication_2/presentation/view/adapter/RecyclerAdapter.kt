@@ -1,9 +1,10 @@
-package com.example.myapplication_2.view
+package com.example.myapplication_2.presentation.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication_2.R
+import com.example.myapplication_2.presentation.view.viewholder.MatchViewHolderItem
 
 class RecyclerAdapter : RecyclerView.Adapter<MatchViewHolderItem>() {
     // 表示するリストを用意

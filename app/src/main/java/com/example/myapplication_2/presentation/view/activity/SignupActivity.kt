@@ -1,4 +1,4 @@
-package com.example.myapplication_2.view
+package com.example.myapplication_2.presentation.view.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,36 +7,41 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Observer
-import com.example.myapplication_2.databinding.ActivityLoginBinding
-import com.example.myapplication_2.viewmodel.LoginViewModel
+import com.example.myapplication_2.R
+import com.example.myapplication_2.databinding.ActivitySignupBinding
+import com.example.myapplication_2.presentation.viewmodel.SignupViewModel
 
-class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLoginBinding
-    private val loginViewModel: LoginViewModel by viewModels()
+class SignupActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySignupBinding
+    private val signupViewModel: SignupViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        installSplashScreen()
+        setTheme(R.style.Theme_MyApplication_2)
+
         super.onCreate(savedInstanceState)
 
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-
+        binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // ユーザーがすでにログインしている場合、MainActivity に移動
-        if (loginViewModel.isUserLoggedIn()) {
+        if (signupViewModel.isUserLoggedIn()) {
             moveToMainActivity()
         }
 
-        // ログインボタンのクリックイベント
+        // 登録ボタンのクリックイベント
         binding.continueBtn.setOnClickListener {
+            val username = binding.username.text.toString()
             val email = binding.email.text.toString().trim()
             val password = binding.password.text.toString().trim()
 
-            // ViewModel にログイン処理を依頼
-            loginViewModel.login(email, password)
+            // ViewModel に新規登録処理を依頼
+            signupViewModel.signup(username, email, password)
         }
 
-        // ログイン結果を監視
-        loginViewModel.loginResult.observe(this, Observer { isSuccess ->
+        // 新規ユーザー登録の結果を監視
+        signupViewModel.signupResult.observe(this, Observer { isSuccess ->
             if (isSuccess) {
                 moveToMainActivity()
             } else {
@@ -44,9 +49,9 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-        // 登録画面へ遷移
+        // ログイン画面へ遷移
         binding.move.setOnClickListener {
-            val intent = Intent(this, SignupActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
     }

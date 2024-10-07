@@ -1,4 +1,4 @@
-package com.example.myapplication_2.view
+package com.example.myapplication_2.presentation.view.viewholder
 
 import android.view.View
 import android.widget.TextView

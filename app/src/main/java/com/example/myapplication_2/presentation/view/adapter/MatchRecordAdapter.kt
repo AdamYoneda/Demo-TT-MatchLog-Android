@@ -1,12 +1,13 @@
-package com.example.myapplication_2.view
+package com.example.myapplication_2.presentation.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication_2.R
-import com.example.myapplication_2.model.GameScores
-import com.example.myapplication_2.model.Match
-import com.example.myapplication_2.model.Tournament
+import com.example.myapplication_2.data.model.Match
+import com.example.myapplication_2.data.model.Tournament
+import com.example.myapplication_2.presentation.view.viewholder.MatchViewHolder
+import com.example.myapplication_2.presentation.view.viewholder.TournamentViewHolder
 
 class MatchRecordAdapter(private val tournaments: List<Tournament>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

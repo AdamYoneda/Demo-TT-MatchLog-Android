@@ -1,6 +1,6 @@
 package com.example.myapplication_2.utils
 
-import com.example.myapplication_2.model.User
+import com.example.myapplication_2.data.model.User
 import com.google.firebase.Timestamp
 
 object UserManager {

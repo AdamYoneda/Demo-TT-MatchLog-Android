@@ -1,4 +1,4 @@
-package com.example.myapplication_2.view
+package com.example.myapplication_2.presentation.view.activity
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -9,10 +9,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication_2.R
-import com.example.myapplication_2.model.GameScores
-import com.example.myapplication_2.model.Match
-import com.example.myapplication_2.model.MatchType
-import com.example.myapplication_2.model.Tournament
+import com.example.myapplication_2.data.model.GameScores
+import com.example.myapplication_2.data.model.Match
+import com.example.myapplication_2.data.model.MatchType
+import com.example.myapplication_2.data.model.Tournament
+import com.example.myapplication_2.presentation.view.adapter.MatchRecordAdapter
 import com.google.android.material.navigation.NavigationView
 
 class MatchRecordActivity : AppCompatActivity() {

@@ -7,7 +7,7 @@
     android:background="#ffffff"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.SignupActivity">
+    tools:context=".presentation.view.activity.SignupActivity">
 
     <EditText
         android:id="@+id/username"

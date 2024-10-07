@@ -1,4 +1,4 @@
-package com.example.myapplication_2.model
+package com.example.myapplication_2.data.model
 
 // 試合形式の列挙型にStringの値を持たせる
 enum class MatchType(val type: String) {

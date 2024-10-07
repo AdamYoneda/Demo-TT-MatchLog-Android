@@ -1,4 +1,4 @@
-package com.example.myapplication_2.model
+package com.example.myapplication_2.data.model
 
 // 各ゲームセットのスコア (最大7セットをサポート)
 data class GameScores(

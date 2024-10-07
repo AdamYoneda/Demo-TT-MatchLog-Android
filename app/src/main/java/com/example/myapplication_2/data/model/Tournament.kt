@@ -1,4 +1,4 @@
-package com.example.myapplication_2.model
+package com.example.myapplication_2.data.model
 
 // 大会セクション (日付、試合形式、大会名、試合リスト)
 data class Tournament(
