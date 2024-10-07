@@ -16,7 +16,9 @@ import com.example.myapplication_2.presentation.view.adapter.MatchRecordAdapter
 import com.example.myapplication_2.presentation.viewmodel.MatchRecordViewModel
 import com.example.myapplication_2.presentation.viewmodel.MatchRecordViewModelFactory
 import com.example.myapplication_2.utils.UserManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 
 class MatchRecordActivity : AppCompatActivity() {
 
@@ -45,6 +47,14 @@ class MatchRecordActivity : AppCompatActivity() {
         viewModel.loadTournaments()
 
         setupDrawer() // ナビゲーションドロワーの設定
+
+        // Access the FloatingActionButton
+        val fab: FloatingActionButton = findViewById(R.id.fab)
+
+        // Set a click listener on the FAB
+        fab.setOnClickListener {
+            Snackbar.make(it, "FAB clicked!", Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupDrawer() {
