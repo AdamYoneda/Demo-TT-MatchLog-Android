@@ -1,5 +1,6 @@
 package com.example.myapplication_2.presentation.view.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar // 修正
@@ -53,7 +54,9 @@ class MatchRecordActivity : AppCompatActivity() {
 
         // Set a click listener on the FAB
         fab.setOnClickListener {
-            Snackbar.make(it, "FAB clicked!", Snackbar.LENGTH_SHORT).show()
+            // Navigate to match input screen, passing tournament data
+            val intent = Intent(this, TournamentInputActivity::class.java)
+            startActivity(intent)
         }
     }
 
