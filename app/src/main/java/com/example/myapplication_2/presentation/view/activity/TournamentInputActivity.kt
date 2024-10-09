@@ -33,8 +33,9 @@ class TournamentInputActivity : AppCompatActivity() {
         }
 
         // Set up Spinner for MatchType
+        val matchTypes = arrayOf(MatchType.SINGLES.getValue(), MatchType.DOUBLES.getValue(), MatchType.TEAM.getValue())
         matchTypeSpinner.adapter = ArrayAdapter(
-            this, android.R.layout.simple_spinner_item, MatchType.values()
+            this, android.R.layout.simple_spinner_item, matchTypes
         )
 
         // Handle form submission
