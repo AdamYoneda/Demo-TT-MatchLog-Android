@@ -36,7 +36,7 @@ class TournamentInputActivity : AppCompatActivity() {
         datePickerButton = findViewById(R.id.datePickerButton)
         matchTypeSpinner = findViewById(R.id.matchTypeSpinner)
 
-        // Initially disable the button
+        // 初期状態は無効
         nextButton.isEnabled = false
         nextButton.setBackgroundColor(Color.GRAY)
 
@@ -93,6 +93,7 @@ class TournamentInputActivity : AppCompatActivity() {
         }
     }
 
+    // DatePickerを表示
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -110,14 +111,15 @@ class TournamentInputActivity : AppCompatActivity() {
         datePickerDialog.show()
     }
 
+    // ボタンの有効・無効切り替え
     private fun validateInputs() {
         val isTournamentNameFilled = tournamentNameEditText.text.toString().trim().isNotEmpty()
         if (isTournamentNameFilled && isDateSelected) {
             nextButton.isEnabled = true
-            nextButton.setBackgroundColor(Color.BLUE) // Enable button color (Blue, for example)
+            nextButton.setBackgroundColor(Color.parseColor("#009688"))
         } else {
             nextButton.isEnabled = false
-            nextButton.setBackgroundColor(Color.GRAY) // Disable button color
+            nextButton.setBackgroundColor(Color.GRAY)
         }
     }
 
