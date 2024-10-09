@@ -1,6 +1,7 @@
 package com.example.myapplication_2.presentation.view.activity
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.graphics.Color
 import java.util.Calendar
 import android.os.Bundle
@@ -81,15 +82,11 @@ class TournamentInputActivity : AppCompatActivity() {
         // Handle form submission
         findViewById<Button>(R.id.nextButton).setOnClickListener {
             val tournamentName = tournamentNameEditText.text.toString()
-            selectedMatchType = matchTypeSpinner.selectedItem as MatchType
+            val selectedMatchType = selectedMatchType.getValue()
 
             // Navigate to match input screen, passing tournament data
-//            val intent = Intent(this, MatchInputActivity::class.java).apply {
-//                putExtra("tournamentName", tournamentName)
-//                putExtra("date", selectedDate)
-//                putExtra("matchType", selectedMatchType)
-//            }
-//            startActivity(intent)
+            val intent = Intent(this, MatchInputActivity::class.java)
+            startActivity(intent)
         }
     }
 
